@@ -12,12 +12,13 @@ function App() {
         (response) => {
           setDays(response.data);
         },
-        (error) => console.log("get", error)
+        (error) => console.log("get", error),
       )
       .catch((c) => console.warn("catch", c));
   }, []);
   return (
     <div>
+      <h1>Hello World</h1>
       <ul>
         {days.map((day) => (
           <li key={day.name}>{day.name}</li>
