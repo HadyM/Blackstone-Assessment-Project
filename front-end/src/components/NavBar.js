@@ -24,14 +24,14 @@ export default function NavBar() {
       <Nav.Item>
         <button>
           <h4>
-            <Link to="/bookings">Bookings</Link>
+            <Link to="meetingRooms/new">New Room</Link>
           </h4>
         </button>
       </Nav.Item>
       <Nav.Item>
         <button>
           <h4>
-            <Link to="meetingRooms/new">New Room</Link>
+            <Link to="/bookings">Bookings</Link>
           </h4>
         </button>
       </Nav.Item>
