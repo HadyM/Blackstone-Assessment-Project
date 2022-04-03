@@ -1,11 +1,24 @@
-DROP DATABASE IF EXISTS cta_dev;
-CREATE DATABASE cta_dev;
+DROP DATABASE IF EXISTS assessment_dev;
+CREATE DATABASE assessment_dev;
 
-\c cta_dev;
 
-DROP TABLE IF EXISTS test;
 
-CREATE TABLE test (
+DROP TABLE IF EXISTS meeting_rooms CASCADE;
+
+CREATE TABLE meeting_rooms (
     id SERIAL PRIMARY KEY, 
-    name TEXT
+    name TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    floor INTEGER NOT NULL
+);
+
+DROP TABLE IF EXISTS bookings CASCADE;
+
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY, 
+    meetingName TEXT NOT NULL,
+    startDate TIMESTAMP NOT NULL,
+    endDate TIMESTAMP NOT NULL,
+    attendees TEXT,
+    meetingRoomId INTEGER REFERENCES meeting_rooms (id) ON DELETE CASCADE
 );

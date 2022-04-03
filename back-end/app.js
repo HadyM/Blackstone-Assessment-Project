@@ -4,6 +4,8 @@ const express = require("express");
 
 // CONFIGURATION
 const app = express();
+const meetingRoomController = require("./controllers/meetingRoomController");
+const bookingController = require("./controllers/bookingController");
 
 // MIDDLEWARE
 app.use(cors());
@@ -11,26 +13,15 @@ app.use(express.json()); // Parse incoming JSON
 
 // ROUTES
 app.get("/", (req, res) => {
-  res.send("Hello, world!");
+  res.send(`<h1>Welcome to the Meeting Rooms Page</h1>`);
 });
 
-/////////////////////////////////////
-// REMOVE AFTER SUCCESSFUL DEPLOYMENT
-/////////////////////////////////////
-const db = require("./db/dbConfig.js");
+app.use("/meetingRooms", meetingRoomController);
+app.use("/bookings", bookingController);
 
-app.get("/test", async (req, res) => {
-  try {
-    const allDays = await db.any("SELECT * FROM test");
-    res.json(allDays);
-  } catch (err) {
-    res.json(err);
-  }
-});
-
-/////////////////////////////////////
-// REMOVE AFTER SUCCESSFUL DEPLOYMENT
-/////////////////////////////////////
+app.get("*", ((req, res) => {
+  res.status(404).send("<h1>404 Page Not Found</h1>");
+}));
 
 // EXPORT
 module.exports = app;
