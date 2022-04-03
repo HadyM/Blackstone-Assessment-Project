@@ -54,16 +54,16 @@ function App() {
     });
   }, []);
 
-  const addBooking = (newBooking) => {
-    axios
-      .post(`${API_BASE}/bookings`, newBooking)
-      .then((response) => {
-        setBooking([...booking, newBooking]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const addBooking = (newBooking) => {
+  //   axios
+  //     .post(`${API_BASE}/bookings`, newBooking)
+  //     .then((response) => {
+  //       setBooking([...booking, newBooking]);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   const updateBooking = (updatedBooking, id) => {
     axios.put(`${API_BASE}/bookings/${id}`, updatedBooking).then(
