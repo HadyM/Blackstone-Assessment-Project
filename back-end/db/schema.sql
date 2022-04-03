@@ -1,8 +1,3 @@
-DROP DATABASE IF EXISTS assessment_dev;
-CREATE DATABASE assessment_dev;
-
-
-
 DROP TABLE IF EXISTS meeting_rooms CASCADE;
 
 CREATE TABLE meeting_rooms (

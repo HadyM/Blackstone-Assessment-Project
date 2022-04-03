@@ -1,29 +1,54 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-const API = process.env.REACT_APP_API_URL;
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import axios from "axios";
+import { apiURL } from "./util/apiURL";
 
-console.log(API);
+import Home from "./pages/Home";
+import Error from "./pages/Error";
+
+import NavBar from "./components/NavBar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
+const API_BASE = apiURL();
+
 function App() {
-  const [days, setDays] = useState([]);
+  const [room, setRooms] = useState([]);
+
   useEffect(() => {
     axios
-      .get(`${API}/test`)
+      .get(`${API_BASE}/meetingRooms`)
       .then(
         (response) => {
-          setDays(response.data);
+          const { payload } = response.data;
+          setRooms(payload);
         },
         (error) => console.log("get", error),
       )
       .catch((c) => console.warn("catch", c));
   }, []);
+
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="App">
+      <Router>
+        <NavBar />
+        <main>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="*">
+              <Error />
+            </Route>
+          </Switch>
+        </main>
+      </Router>
+      {/* <h1>Hello World</h1>
       <ul>
-        {days.map((day) => (
-          <li key={day.name}>{day.name}</li>
+        {room.map((booking) => (
+          <li key={booking.id}>{booking.name}</li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
