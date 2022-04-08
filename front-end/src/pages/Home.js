@@ -5,9 +5,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDateTimePicker from "@mui/lab/DesktopDateTimePicker";
 
 function Home(props) {
-  const [value, setValue] = React.useState(
-    new Date(),
-  );
+  const [value, setValue] = React.useState(new Date());
   return (
     <div>
       <div className="Home">

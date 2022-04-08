@@ -1,17 +1,12 @@
-import { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { withRouter, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
-import { apiURL } from "../util/apiURL";
 
-const API_BASE = apiURL();
-
-function BookingEditForm(props) {
-  let { id } = useParams();
+function BookingNewForm(props) {
   let history = useHistory();
 
-  const [booking, setBookings] = useState({
+  const [booking, setBooking] = useState({
     meetingname: "",
     startdate: "",
     enddate: "",
@@ -19,46 +14,34 @@ function BookingEditForm(props) {
   });
 
   const handleInputChange = (event) => {
-    setBookings({ ...booking, [event.target.id]: event.target.value });
+    setBooking({ ...booking, [event.target.id]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.updateBooking(booking, id);
-    history.push("/bookings");
+    props.addBooking(booking);
+    props.history.push("/bookings");
   };
 
   const handleCancel = () => {
-    history.push(`/bookings/${id}`);
+    history.push("/");
   };
 
-  useEffect(() => {
-    axios.get(`${API_BASE}/bookings/${id}`).then(
-      (response) => {
-        const { payload } = response.data;
-        setBookings(payload);
-      },
-      (error) => {
-        history.push("/not-found");
-      },
-    );
-  }, [id, history]);
-
   return (
-    <div className="Edit">
-      <Form onSubmit={handleSubmit} className="EditForm">
+    <div className="NewBooking">
+      <Form onSubmit={handleSubmit} className="Form">
         <Form.Group>
-          <Form.Label> Booking Name</Form.Label>
+          <Form.Label>Meeting Name</Form.Label>
           <Form.Control
-            id="name"
+            id="meetingname"
             type="text"
-            value={booking.meetingname}
+            value={booking.name}
             onChange={handleInputChange}
-            placeholder="Enter Name of Booking Room"
+            placeholder="Enter Name of Meeting"
             required
           />
           <Form.Text className="text-muted">
-            Please enter Name of Booking Room"
+            Please enter the Name of Meeting
           </Form.Text>
         </Form.Group>
         <Form.Group>
@@ -68,11 +51,11 @@ function BookingEditForm(props) {
             type="datetime-local"
             value={booking.startdate}
             onChange={handleInputChange}
-            placeholder="Enter Date & Time"
+            placeholder="Enter Start Date"
             required
           />
           <Form.Text className="text-muted">
-            Please enter Start Date & Time of Booking Room"
+            Please enter the start date and time of the meeting
           </Form.Text>
         </Form.Group>
         <Form.Group>
@@ -82,11 +65,11 @@ function BookingEditForm(props) {
             type="datetime-local"
             value={booking.enddate}
             onChange={handleInputChange}
-            placeholder="Enter Date & Time"
+            placeholder="Enter End Date"
             required
           />
           <Form.Text className="text-muted">
-            Please enter End Date & Time of Booking Room"
+            Please enter the end date and time of the meeting
           </Form.Text>
         </Form.Group>
         <Form.Group>
@@ -96,10 +79,10 @@ function BookingEditForm(props) {
             type="text"
             value={booking.attendees}
             onChange={handleInputChange}
-            placeholder="Enter Names of Attendees"
+            placeholder="Enter Number of Attendees"
           />
           <Form.Text className="text-muted">
-            Please enter Names of Attendees
+            Please enter Number of Attendees
           </Form.Text>
         </Form.Group>
         <Button variant="primary" type="submit">
@@ -113,4 +96,4 @@ function BookingEditForm(props) {
   );
 }
 
-export default BookingEditForm;
+export default withRouter(BookingNewForm);

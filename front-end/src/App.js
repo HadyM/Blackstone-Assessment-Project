@@ -12,6 +12,7 @@ import Error from "./pages/Error";
 import BookingIndex from "./pages/BookingIndex";
 import BookingShow from "./pages/BookingShow";
 import BookingEdit from "./pages/BookingEdit";
+import BookingNew from "./pages/BookingNew";
 
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -54,16 +55,16 @@ function App() {
     });
   }, []);
 
-  // const addBooking = (newBooking) => {
-  //   axios
-  //     .post(`${API_BASE}/bookings`, newBooking)
-  //     .then((response) => {
-  //       setBooking([...booking, newBooking]);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const addBooking = (newBooking) => {
+    axios
+      .post(`${API_BASE}/bookings`, newBooking)
+      .then((response) => {
+        setBooking([...booking, newBooking]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const updateBooking = (updatedBooking, id) => {
     axios.put(`${API_BASE}/bookings/${id}`, updatedBooking).then(
@@ -94,6 +95,9 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
+            <Route exact path="/bookings/new">
+              <BookingNew addBooking={addBooking} />
+            </Route>
             <Route exact path="/bookings/:id/edit">
               <BookingEdit booking={booking} updateBooking={updateBooking} />
             </Route>
@@ -115,7 +119,6 @@ function App() {
             <Route path="/bookings/:index">
               <BookingShow booking={booking} />
             </Route>
-
             <Route path="*">
               <Error />
             </Route>

@@ -35,6 +35,13 @@ export default function NavBar() {
           </h4>
         </button>
       </Nav.Item>
+      <Nav.Item>
+        <button>
+          <h4>
+            <Link to="/bookings/new">New Bookings</Link>
+          </h4>
+        </button>
+      </Nav.Item>
     </Nav>
   );
 }
